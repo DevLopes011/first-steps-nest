@@ -23,76 +23,131 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# 🐾 PetShop API
 
-## Project setup
+API RESTful construída com NestJS para gerenciar usuários e seus pets (gatos).  
+Possui autenticação JWT, validação de dados e persistência com MySQL via TypeORM.
 
-```bash
-$ npm install
-```
+---
 
-## Compile and run the project
+## ⚙️ Tecnologias Utilizadas
 
-```bash
-# development
-$ npm run start
+- [NestJS](https://nestjs.com/) - Framework Node.js para construir APIs escaláveis  
+- [TypeScript](https://www.typescriptlang.org/) - Linguagem base  
+- [TypeORM](https://typeorm.io/) - ORM para integração com MySQL  
+- [MySQL](https://www.mysql.com/) - Banco de dados relacional  
+- [Passport](http://www.passportjs.org/) + [JWT](https://jwt.io/) - Autenticação  
+- [class-validator](https://github.com/typestack/class-validator) - Validação de DTOs  
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
-```
+## 🚀 Funcionalidades
 
-## Run tests
+- Cadastro de usuários (donos de pets)  
+- Login com geração de token JWT  
+- Cadastro de gatos vinculados a usuários  
+- Proteção de rotas via JWT (apenas usuários autenticados podem acessar)  
+- Validação automática dos dados recebidos nas requisições  
+- Controle de criação, leitura, atualização e exclusão (CRUD) para usuários e gatos  
 
-```bash
-# unit tests
-$ npm run test
+---
 
-# e2e tests
-$ npm run test:e2e
+## 📥 Instalação
 
-# test coverage
-$ npm run test:cov
-```
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seuusuario/petshop-api.git
+   cd petshop-api
+Instale as dependências:
 
-## Deployment
+bash
+Copiar
+Editar
+npm install
+Configure as variáveis de ambiente (crie um arquivo .env):
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+env
+Copiar
+Editar
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=lopes
+DB_PASS=12345
+DB_NAME=cats
+JWT_SECRET=sua_chave_secreta
+PORT=3000
+Execute a aplicação:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+bash
+Copiar
+Editar
+npm run start:dev
+🔧 Uso
+Cadastro de usuário
+POST /user
+Exemplo de corpo JSON:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+json
+Copiar
+Editar
+{
+  "name": "João Lopes",
+  "cpf": "12345678900",
+  "phoneNumber": "11999999999",
+  "email": "joao@gmail.com",
+  "dob": "1990-01-01",
+  "password": "SenhaForte123!"
+}
+Login
+POST /auth/login
+Exemplo de corpo JSON:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+json
+Copiar
+Editar
+{
+  "email": "joao@gmail.com",
+  "password": "SenhaForte123!"
+}
+Resposta:
 
-## Resources
+json
+Copiar
+Editar
+{
+  "access_token": "token.jwt.aqui"
+}
+Usando o token
+Para acessar rotas protegidas, envie o header:
 
-Check out a few resources that may come in handy when working with NestJS:
+makefile
+Copiar
+Editar
+Authorization: Bearer token.jwt.aqui
+Cadastro de gato
+POST /cats (rota protegida - precisa do token)
+Exemplo de corpo JSON:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+json
+Copiar
+Editar
+{
+  "name": "Mingau",
+  "age": 3,
+  "breed": "Siamês"
+}
+Listar gatos
+GET /cats (rota protegida)
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+🛠 Estrutura do Projeto
+ruby
+Copiar
+Editar
+src/
+├── auth/                 # Módulo de autenticação (JWT, login)
+├── cats/                 # Módulo de gatos (controller, service, dto)
+├── user/                 # Módulo de usuários (controller, service, dto)
+├── app.module.ts         # Módulo raiz
+├── main.ts               # Arquivo principal (bootstrap)
+📜 Licença
+MIT © João Lopes
